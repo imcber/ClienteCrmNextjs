@@ -2,11 +2,37 @@ import React from "react";
 import Head from "next/head";
 import Sidebar from "../Components/Sidebar";
 import { useRouter } from "next/router";
+import Header from "../Components/Header";
+import { useQuery, gql } from "@apollo/client";
 
+const QUERY_DATA_USER = gql`
+  query obtenerUsuario {
+    obtenerUsuario {
+      id
+      nombre
+      apellido
+      email
+    }
+  }
+`;
+
+const listNoCredentialsPages = ["/login", "/nuevacuenta"];
 const Layout = ({ children }) => {
   //hook de router
+  const router = useRouter();
+  const { pathname } = router;
 
-  const { pathname } = useRouter();
+  //data usuario
+  const { data, loading, error } = useQuery(QUERY_DATA_USER);
+
+  //no acceder a data antes de tener algo
+
+  if (loading) return null;
+
+  if (!data.obtenerUsuario && listNoCredentialsPages.indexOf(pathname) === -1) {
+    router.push("/login");
+    return <div>Redirigiendo...</div>;
+  }
   return (
     <>
       <head>
@@ -31,6 +57,7 @@ const Layout = ({ children }) => {
           <div className="flex min-h-screen">
             <Sidebar />
             <main className="sm:w-2/3 xl:w-4/5 sm:min-h-screen p-5">
+              <Header />
               {children}
             </main>
           </div>
