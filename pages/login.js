@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../Components/Layout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation, gql } from "@apollo/client";
 import { useRouter } from "next/router";
-import { route } from "next/dist/next-server/server/router";
+import InputForm from "../Components/InputForm";
 
 const AUTENTICAR_USUARIO = gql`
   mutation autenticarUsuario($input: AutenticarInput) {
@@ -62,10 +62,12 @@ const Login = () => {
     );
   };
 
-  if (typeof window !== "undefined" && localStorage.getItem("token")) {
-    router.push("/");
-    return null;
-  }
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      router.push("/");
+    }
+  });
+
   return (
     <>
       <Layout>
@@ -102,35 +104,6 @@ const Login = () => {
         </div>
       </Layout>
     </>
-  );
-};
-
-const InputForm = ({ name, type, placeholder, label, formik }) => {
-  const { errors, handleBlur, handleChange, values, touched } = formik;
-
-  return (
-    <div className="mb-4">
-      <label
-        className="block text-gray-700 text-sm font-bold mb-2"
-        htmlFor={name}
-      >
-        {label}
-      </label>
-      <input
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id={name}
-        type={type}
-        placeholder={placeholder}
-        value={values[name]}
-        onChange={handleChange}
-        onBlur={handleBlur}
-      />
-      {errors[name] && touched[name] ? (
-        <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-2">
-          <p className="font-bold">{errors[name]}</p>
-        </div>
-      ) : null}
-    </div>
   );
 };
 
