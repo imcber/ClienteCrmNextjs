@@ -3,7 +3,9 @@ import Layout from "../Components/Layout";
 import { useQuery, gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Cliente from "../Components/Cliente";
 
+//Obtiene los clientes del vendedor
 const QUERY_CLIENTES_VENDEDOR = gql`
   query obtenerClientesXVendedor {
     obtenerClientesXVendedor {
@@ -19,6 +21,7 @@ const QUERY_CLIENTES_VENDEDOR = gql`
 export default function Index() {
   //consulta de apollo
   const { data, loading, error } = useQuery(QUERY_CLIENTES_VENDEDOR);
+
   // routing
   const router = useRouter();
   if (loading) return "Cargando";
@@ -43,17 +46,13 @@ export default function Index() {
               <th className="w-1/5 py-2">Nombre</th>
               <th className="w-1/5 py-2">Empresa</th>
               <th className="w-1/5 py-2">Email</th>
+              <th className="w-1/5 py-2">Eliminar</th>
+              <th className="w-1/5 py-2">Editar</th>
             </tr>
           </thead>
           <tbody className="bg-white">
             {data.obtenerClientesXVendedor.map((item) => (
-              <tr key={item.id}>
-                <td className="border px-4 py-2">
-                  {item.nombre} {item.apellido}
-                </td>
-                <td className="border px-4 py-2">{item.empresa}</td>
-                <td className="border px-4 py-2">{item.email}</td>
-              </tr>
+              <Cliente key={item.id} item={item} />
             ))}
           </tbody>
         </table>
