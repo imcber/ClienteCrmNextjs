@@ -24,10 +24,22 @@ export default function Index() {
 
   // routing
   const router = useRouter();
+  console.log(loading);
+  console.log(data);
+  console.log(error);
   if (loading) return "Cargando";
+  console.log("true bitch");
 
-  if (!loading && !data) {
+  console.log(loading);
+  console.log(data);
+  console.log(error);
+
+  if (!data) {
+    localStorage.removeItem("token");
     router.push("/login");
+    console.log("otro log");
+
+    console.log(data);
     return <div>Redirigiendo...</div>;
   }
 

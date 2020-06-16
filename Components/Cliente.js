@@ -80,7 +80,7 @@ const Cliente = ({ item: { nombre, apellido, empresa, email, id } }) => {
         <button
           type="button"
           onClick={() => eliminarCliente(id)}
-          className="flex items-center justify-center bg-red-600 py-2 px-4 w-full text-white rounded text-xs uppercase font-bold"
+          className="flex items-center justify-center bg-red-600 py-2 px-4 w-full text-white rounded text-xs uppercase font-bold hover:bg-red-800"
         >
           Eliminar
           <svg fill="currentColor" viewBox="0 0 20 20" className="w-8 h-8 ml-3">
@@ -89,6 +89,17 @@ const Cliente = ({ item: { nombre, apellido, empresa, email, id } }) => {
               clipRule="evenodd"
               fillRule="evenodd"
             ></path>
+          </svg>
+        </button>
+      </td>
+      <td className="border px-4 py-2">
+        <button
+          type="button"
+          className="flex items-center justify-center bg-blue-600 py-2 px-4 w-full text-white rounded text-xs uppercase font-bold hover:bg-blue-800"
+        >
+          Editar
+          <svg fill="currentColor" viewBox="0 0 20 20" className="w-8 h-8 ml-3">
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
           </svg>
         </button>
       </td>

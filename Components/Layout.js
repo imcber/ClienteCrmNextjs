@@ -4,6 +4,7 @@ import Sidebar from "../Components/Sidebar";
 import { useRouter } from "next/router";
 import Header from "../Components/Header";
 import { useQuery, gql } from "@apollo/client";
+import { route } from "next/dist/next-server/server/router";
 
 const QUERY_DATA_USER = gql`
   query obtenerUsuario {
@@ -26,13 +27,19 @@ const Layout = ({ children }) => {
   const { data, loading, error } = useQuery(QUERY_DATA_USER);
 
   //no acceder a data antes de tener algo
-
   if (loading) return null;
+  console.log("QUIOBO");
 
-  if (!data.obtenerUsuario && listNoCredentialsPages.indexOf(pathname) === -1) {
-    router.push("/login");
-    return <div>Redirigiendo...</div>;
+  console.log(loading);
+
+  if (!data.obtenerUsuario) {
+    if (listNoCredentialsPages.indexOf(pathname) === -1) {
+      router.reload();
+      return null;
+    }
   }
+  console.log(data);
+
   return (
     <>
       <head>
@@ -57,7 +64,7 @@ const Layout = ({ children }) => {
           <div className="flex min-h-screen">
             <Sidebar />
             <main className="sm:w-2/3 xl:w-4/5 sm:min-h-screen p-5">
-              <Header />
+              <Header data={data} />
               {children}
             </main>
           </div>

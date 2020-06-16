@@ -13,14 +13,14 @@ const QUERY_DATA_USER = gql`
   }
 `;
 
-const Header = () => {
+const Header = ({ data }) => {
   //data usuario
-  const { data, loading, error } = useQuery(QUERY_DATA_USER);
+  //const { data, loading, error } = useQuery(QUERY_DATA_USER);
   // routing
   const router = useRouter();
   //no acceder a data antes de tener algo
 
-  if (loading) return null;
+  console.log(data);
 
   const { nombre, apellido, email } = data.obtenerUsuario;
 
