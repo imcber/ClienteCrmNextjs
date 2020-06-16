@@ -1,6 +1,7 @@
 import React from "react";
 import { useMutation, gql } from "@apollo/client";
 import Swal from "sweetalert2";
+import Router from "next/router";
 
 //Elimina un cliente
 const ELIMINA_CLIENTE = gql`
@@ -43,7 +44,7 @@ const Cliente = ({ item: { nombre, apellido, empresa, email, id } }) => {
     },
   });
   //Funcion para eliminar clientes
-  const eliminarCliente = async (id) => {
+  const eliminarCliente = async () => {
     Swal.fire({
       title: "Deseas eliminar a este cliente?",
       text: "Este cambio no es reversible",
@@ -69,6 +70,15 @@ const Cliente = ({ item: { nombre, apellido, empresa, email, id } }) => {
       }
     });
   };
+
+  //Funcion para editar cliente
+  const editarCliente = () => {
+    Router.push({
+      pathname: "/editarcliente/[id]",
+      query: { id },
+    });
+  };
+
   return (
     <tr>
       <td className="border px-4 py-2">
@@ -79,7 +89,7 @@ const Cliente = ({ item: { nombre, apellido, empresa, email, id } }) => {
       <td className="border px-4 py-2">
         <button
           type="button"
-          onClick={() => eliminarCliente(id)}
+          onClick={() => eliminarCliente()}
           className="flex items-center justify-center bg-red-600 py-2 px-4 w-full text-white rounded text-xs uppercase font-bold hover:bg-red-800"
         >
           Eliminar
@@ -96,6 +106,7 @@ const Cliente = ({ item: { nombre, apellido, empresa, email, id } }) => {
         <button
           type="button"
           className="flex items-center justify-center bg-blue-600 py-2 px-4 w-full text-white rounded text-xs uppercase font-bold hover:bg-blue-800"
+          onClick={() => editarCliente()}
         >
           Editar
           <svg fill="currentColor" viewBox="0 0 20 20" className="w-8 h-8 ml-3">

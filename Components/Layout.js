@@ -28,9 +28,6 @@ const Layout = ({ children }) => {
 
   //no acceder a data antes de tener algo
   if (loading) return null;
-  console.log("QUIOBO");
-
-  console.log(loading);
 
   if (!data.obtenerUsuario) {
     if (listNoCredentialsPages.indexOf(pathname) === -1) {
@@ -38,7 +35,6 @@ const Layout = ({ children }) => {
       return null;
     }
   }
-  console.log(data);
 
   return (
     <>
