@@ -17,10 +17,12 @@ const OBTENER_PRODUCTOS = gql`
 const AsignarProductos = () => {
   const { data, loading } = useQuery(OBTENER_PRODUCTOS);
   const [productos, setProductos] = useState([]);
-  const { agregarProductos } = useContext(PedidoContext);
+  const { agregarProductos, actualizarTotal } = useContext(PedidoContext);
 
   useEffect(() => {
     agregarProductos(productos);
+    //actualizar total
+    actualizarTotal();
   }, [productos]);
 
   if (loading) return "Cargando";
