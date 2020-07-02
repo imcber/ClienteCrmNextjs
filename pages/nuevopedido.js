@@ -19,6 +19,14 @@ const NUEVO_PEDIDO = gql`
   }
 `;
 
+const PEDIDOS_VENDEDOR = gql`
+  query obtenerPedidosVendedor {
+    obtenerPedidosVendedor {
+      id
+    }
+  }
+`;
+
 const NuevoPedido = () => {
   const router = useRouter();
   //utilizar context y obtener funciones y valores
@@ -26,7 +34,20 @@ const NuevoPedido = () => {
   const { cliente, productos, total } = pedidoContext;
 
   //Mutation para nuevo pedido
-  const [nuevoPedido] = useMutation(NUEVO_PEDIDO);
+  const [nuevoPedido] = useMutation(NUEVO_PEDIDO, {
+    update(cache, { nuevoPedido }) {
+      const { obtenerPedidosVendedor } = cache.readQuery({
+        query: PEDIDOS_VENDEDOR,
+      });
+
+      cache.writeQuery({
+        query: PEDIDOS_VENDEDOR,
+        data: {
+          obtenerPedidosVendedor: [...obtenerPedidosVendedor, nuevoPedido],
+        },
+      });
+    },
+  });
 
   const validarPedido = () => {
     if (!productos) return "";

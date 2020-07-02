@@ -31,7 +31,7 @@ const NuevoProducto = () => {
   const router = useRouter();
 
   const [nuevoProducto] = useMutation(NUEVO_PRODUCTO, {
-    update(cache) {
+    update(cache, { nuevoProducto }) {
       //Sacar lista de productos
       const { obtenerProductos } = cache.readQuery({
         query: OBTENER_PRODUCTOS,
@@ -41,7 +41,7 @@ const NuevoProducto = () => {
       cache.writeQuery({
         query: OBTENER_PRODUCTOS,
         data: {
-          obtenerProductos: [...OBTENER_PRODUCTOS, nuevoProducto],
+          obtenerProductos: [...obtenerProductos, nuevoProducto],
         },
       });
     },

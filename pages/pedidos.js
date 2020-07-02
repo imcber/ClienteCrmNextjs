@@ -32,9 +32,6 @@ const Pedidos = () => {
 
   if (loading) return "CARGANDO...";
   const { obtenerPedidosVendedor } = data;
-  console.log(error);
-
-  console.log(data);
 
   return (
     <div>

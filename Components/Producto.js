@@ -49,7 +49,7 @@ const Producto = ({ item: { existencia, id, nombre, precio } }) => {
       if (result.value) {
         try {
           const { data } = await eliminaProducto({ variables: { id } });
-          Swal.fire("Correcto", data.eliminarProducto, success);
+          Swal.fire("Correcto", data.eliminarProducto, "success");
         } catch (error) {
           console.log(error);
         }
