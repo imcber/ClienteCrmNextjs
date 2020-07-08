@@ -35,7 +35,7 @@ const NuevoPedido = () => {
 
   //Mutation para nuevo pedido
   const [nuevoPedido] = useMutation(NUEVO_PEDIDO, {
-    update(cache, { nuevoPedido }) {
+    update(cache, { data: nuevoPedido }) {
       const { obtenerPedidosVendedor } = cache.readQuery({
         query: PEDIDOS_VENDEDOR,
       });
